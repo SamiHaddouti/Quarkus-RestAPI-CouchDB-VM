@@ -1,4 +1,4 @@
-# code-with-quarkus Project
+# Quarkus REST API Project for CouchDB
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
@@ -71,4 +71,4 @@ Run Couch DB in Podman:
 podman machine init
 podman machine start
 podman pull docker.io/library/couchdb
-podman run -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=password -p 5984:5984 -d couchdb
+podman run -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=***** -p 5984:5984 -d couchdb
