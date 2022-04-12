@@ -67,8 +67,8 @@ docker run -i --rm -p 8080:8080 quarkus/exercise-quarkus-jvm
 
 # Couch DB
 
-Run Couch DB in Podman:
-podman machine init
-podman machine start
-podman pull docker.io/library/couchdb
-podman run -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=***** -p 5984:5984 -d couchdb
+Run Couch DB:
+docker run -d -p 5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student \
+--network lib-network --network-alias couchdb \
+-v /home/harald/couchdb/data:/opt/couchdb/data \
+-v /home/harald/couchdb/config:/opt/couchdb/etc/local.d --name couchdb couchdb:3
