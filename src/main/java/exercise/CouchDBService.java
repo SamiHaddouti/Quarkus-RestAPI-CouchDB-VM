@@ -17,9 +17,10 @@ import static exercise.IsbnChecker.isISBN;
 public class CouchDBService {
 
     static String COUCHDB_ADDRESS = ConfigProvider.getConfig().getValue("couchdb.address",String.class);
+    static String COUCHDB_PORT = ConfigProvider.getConfig().getValue("couchdb.port",String.class);
     static String COUCHDB_USER = ConfigProvider.getConfig().getValue("couchdb.user",String.class);
     static String COUCHDB_PWORD = ConfigProvider.getConfig().getValue("couchdb.pword",String.class);
-    static String BASE_URL = "http://" + COUCHDB_USER + ":" + COUCHDB_PWORD + "@" + COUCHDB_ADDRESS + ":5984/library";
+    static String BASE_URL = "http://" + COUCHDB_USER + ":" + COUCHDB_PWORD + "@" + COUCHDB_ADDRESS + ":" + COUCHDB_PORT + "/library";
 
     /**
      * executeCurl executes curl commands and returns the Reponse

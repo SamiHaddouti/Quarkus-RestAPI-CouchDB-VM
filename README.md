@@ -71,7 +71,7 @@ docker run --network lib-network --env-file .env -i --rm -p 8080:8080 quarkus/ q
 # Couch DB
 
 Run Couch DB:
-docker run -d -p 5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student \
+docker run -d -p 5985:5985 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student \
 --network lib-network --network-alias couchdb \
 -v /home/harald/couchdb/data:/opt/couchdb/data \
 -v /home/harald/couchdb/config:/opt/couchdb/etc/local.d --name couchdb couchdb:3
