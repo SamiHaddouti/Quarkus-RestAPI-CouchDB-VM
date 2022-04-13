@@ -65,16 +65,16 @@ Easily start your RESTful Web Services
 docker build -f src/main/docker/Dockerfile.jvm_multi -t quarkus/quarkus-rest-api-couchdb-jvm .
 ## Run in dev mode/locally without container
 ./mvnw compile quarkus:dev
-## Run in container in lib-network with env file 
-docker run --network lib-network --env-file .env -i --rm -p 8080:8080 quarkus/ quarkus-rest-api-couchdb-jvm .
+## Run in container in host-network with env file 
+docker run --network host --env-file .env -i --rm -p 8080:8080 quarkus/quarkus-rest-api-couchdb-jvm .
 
 # Couch DB
 
 Run Couch DB:
-docker run -d -p 5985:5985 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student \
+docker run -d -p 5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student \
 --network host --network-alias couchdb \
 -v /home/student/PERSISTENT/couchdb/data:/opt/couchdb/data \
--v /home/student/PERSISTENT/couchdb/config:/opt/couchdb/etc/local.d --name couchdb1 couchdb:3
+-v /home/student/PERSISTENT/couchdb/config:/opt/couchdb/etc/local.d --name couchdb couchdb:3
 
 # Curl Commands 
 [Overview and more commands] (https://documenter.getpostman.com/view/14671395/Uyr4HyxK#f9a1425b-78fd-4030-85cb-3751df5bd3f4)
