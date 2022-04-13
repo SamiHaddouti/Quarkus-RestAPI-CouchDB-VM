@@ -74,7 +74,7 @@ Run Couch DB:
 docker run -d -p 5985:5985 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student \
 --network lib-network --network-alias couchdb \
 -v /home/harald/couchdb/data:/opt/couchdb/data \
--v /home/harald/couchdb/config:/opt/couchdb/etc/local.d --name couchdb couchdb:3
+-v /home/harald/couchdb/config:/opt/couchdb/etc/local.d --name couchdb1 couchdb:3
 
 # Curl Commands 
 [Overview and more commands] (https://documenter.getpostman.com/view/14671395/Uyr4HyxK#f9a1425b-78fd-4030-85cb-3751df5bd3f4)
