@@ -66,7 +66,6 @@ public class CouchDBService {
     }
 
     public static Response getAllBooks() throws IOException, JSONException {
-        System.out.println(BASE_URL);
         String[] command = {"curl", "-X", "GET", BASE_URL + "/_design/books/_view/byAuthor"};
         JSONObject jsonObj = executeCurl(command);
         if (jsonObj.has("error")) {
