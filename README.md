@@ -75,7 +75,7 @@ docker run -d -p 5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student \
 
 # Curl Commands 
 [Overview and more commands] (https://documenter.getpostman.com/view/14671395/Uyr4HyxK#f9a1425b-78fd-4030-85cb-3751df5bd3f4)
-Please use the postman documentation as it also includes test cases and can be easily implemented in Postman (installed on VM).
+Please use the postman documentation as it also includes test cases and can be easily implemented in Postman.
 Else:
 getAll: curl --location --request GET 'http://localhost:8080/api/v1/getall'
 getByISBN: curl --location --request GET 'http://localhost:8080/api/v1/get_isbn/978-3-15-009145-6'
