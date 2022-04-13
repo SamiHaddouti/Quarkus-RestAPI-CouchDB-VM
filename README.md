@@ -71,10 +71,10 @@ docker run --network lib-network --env-file .env -i --rm -p 8080:8080 quarkus/ q
 # Couch DB
 
 Run Couch DB:
-docker run -d -p 5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student \
+docker run -d -p 5985:5985 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student \
 --network lib-network --network-alias couchdb \
 -v /home/harald/couchdb/data:/opt/couchdb/data \
--v /home/harald/couchdb/config:/opt/couchdb/etc/local.d --name couchdb couchdb:3
+-v /home/harald/couchdb/config:/opt/couchdb/etc/local.d --name couchdb1 couchdb:3
 
 # Curl Commands 
 [Overview and more commands] (https://documenter.getpostman.com/view/14671395/Uyr4HyxK#f9a1425b-78fd-4030-85cb-3751df5bd3f4)
@@ -85,6 +85,6 @@ getByISBN: curl --location --request GET 'http://localhost:8080/api/v1/get_isbn/
 getBookByLang: curl --location --request GET 'http://localhost:8080/api/v1/get_lang/de'
 getHealth: curl --location --request GET 'http://localhost:8080/api/v1/health'
 getCount: curl --location --request GET 'http://localhost:8080/api/v1/count'
-createBook: curl --location --request PUT 'http://localhost:8080/api/v1/create'--data-raw '{"author": "Ellis, Bret Easton", "title": "American Psycho", "lang": "en", "isbn": "978-1-5290-7715-5"}'
+createBook: curl --location --request PUT 'http://localhost:8080/api/v1/create' --data-raw '{"author": "Ellis, Bret Easton", "title": "American Psycho", "lang": "en", "isbn": "978-1-5290-7715-5"}'
 
 For Kubernetes deployment change localhost and port!
