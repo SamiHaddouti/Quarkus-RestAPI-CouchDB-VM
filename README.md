@@ -72,3 +72,16 @@ docker run -d -p 5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student \
 --network lib-network --network-alias couchdb \
 -v /home/harald/couchdb/data:/opt/couchdb/data \
 -v /home/harald/couchdb/config:/opt/couchdb/etc/local.d --name couchdb couchdb:3
+
+# Curl Commands 
+[Overview and more commands] (https://documenter.getpostman.com/view/14671395/Uyr4HyxK#f9a1425b-78fd-4030-85cb-3751df5bd3f4)
+Please use the postman documentation as it also includes test cases and can be easily implemented in Postman (installed on VM).
+Else:
+getAll: curl --location --request GET 'http://localhost:8080/api/v1/getall'
+getByISBN: curl --location --request GET 'http://localhost:8080/api/v1/get_isbn/978-3-15-009145-6'
+getBookByLang: curl --location --request GET 'http://localhost:8080/api/v1/get_lang/de'
+getHealth: curl --location --request GET 'http://localhost:8080/api/v1/health'
+getCount: curl --location --request GET 'http://localhost:8080/api/v1/count'
+createBook: curl --location --request PUT 'http://localhost:8080/api/v1/create'--data-raw '{"author": "Ellis, Bret Easton", "title": "American Psycho", "lang": "en", "isbn": "978-1-5290-7715-5"}'
+
+For Kubernetes deployment change localhost and port!
