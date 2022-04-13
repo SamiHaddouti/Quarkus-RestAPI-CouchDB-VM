@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quarkus-microservice-deployment
+  labels:
+    app: quarkus-rest-api-couchdb
+spec:
+  selector:
+    matchLabels:
+      app: quarkus-rest-api-couchdb
+  template:
+    metadata:
+      labels:
+        app: quarkus-rest-api-couchdb
+    spec:
+      containers:
+        - name: quarkus-rest-api-couchdb-container
+          image: samihaddouti/quarkus-rest-api-couchdb:latest
+          ports:
+            - containerPort: 8080
+---

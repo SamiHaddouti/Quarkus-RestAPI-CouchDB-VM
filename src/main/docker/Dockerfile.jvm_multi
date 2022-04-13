@@ -2,12 +2,13 @@
 # This Dockerfile is used in order to build a container that runs the Quarkus application in JVM mode
 #
 # This Dockerfile compiles and builds the images.
-#
-# docker build -f src/main/docker/Dockerfile.jvm_multi -t quarkus/exercise-quarkus-jvm .
+# docker build -f src/main/docker/Dockerfile.jvm_multi -t quarkus/quarkus-rest-api-couchdb-jvm .
 #
 # Then run the container using:
+# docker run -i --rm -p 8080:8080 quarkus/quarkus-rest-api-couchdb-jvm
 #
-# docker run -i --rm -p 8080:8080 quarkus/exercise-quarkus-jvm
+# Run container in network:
+# docker run --network lib-network -i --rm -p 8080:8080 quarkus/quarkus-rest-api-couchdb-jvm
 ###
 
 FROM docker.io/adoptopenjdk/maven-openjdk11 as BUILD
