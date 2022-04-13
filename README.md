@@ -61,9 +61,12 @@ Easily start your RESTful Web Services
 [Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
 
 # Run REST API
-./mvnw package
-docker build -f src/main/docker/Dockerfile.jvm -t quarkus/exercise-quarkus-jvm .
-docker run -i --rm -p 8080:8080 quarkus/exercise-quarkus-jvm
+## Build image
+docker build -f src/main/docker/Dockerfile.jvm_multi -t quarkus/quarkus-rest-api-couchdb-jvm .
+## Run in dev mode/locally without container
+./mvnw compile quarkus:dev
+## Run in container in lib-network with env file 
+docker run --network lib-network --env-file .env -i --rm -p 8080:8080 quarkus/ quarkus-rest-api-couchdb-jvm .
 
 # Couch DB
 
