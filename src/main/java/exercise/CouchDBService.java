@@ -1,11 +1,8 @@
 package exercise;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.microprofile.config.ConfigProvider;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,9 +21,17 @@ public class CouchDBService {
     static String COUCHDB_PWORD = ConfigProvider.getConfig().getValue("couchdb.pword",String.class);
     static String BASE_URL = "http://" + COUCHDB_USER + ":" + COUCHDB_PWORD + "@" + COUCHDB_ADDRESS + ":5984/library";
 
+    /**
+     * executeCurl executes curl commands and returns the Reponse
+     * @param command curl command to be executed
+     * @return returns Response as JSONObject
+     * @throws IOException
+     * @throws JSONException
+     */
     private static JSONObject executeCurl(String[] command) throws IOException, JSONException {
         ProcessBuilder process = new ProcessBuilder(command);
         Process p;
+        // Execute curl command
         try {
             p = process.start();
             BufferedReader reader =  new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -44,8 +49,15 @@ public class CouchDBService {
         }
     }
 
+    /**
+     * getBooksFromJSONArray stores the elements of a JSONArray as Books and returns them as String
+     * @param rows an JSONArray filled with books from CouchDB
+     * @return returns the List of Books as String
+     * @throws JSONException
+     */
     private static String getBooksFromJSONArray(JSONArray rows) throws JSONException {
         List<Book>books = new ArrayList<>();
+        // Get elements from rows and create Books
         try {
             for(int i = 0 ; i < rows.length() ; i++){
                 String bookValue = rows.getJSONObject(i).getString("value");
@@ -65,8 +77,13 @@ public class CouchDBService {
         }
     }
 
+    /**
+     * getAllBooks executes a get request and returns all books from a library DB
+     * @return returns a Response containing all books or other INFO
+     * @throws IOException
+     * @throws JSONException
+     */
     public static Response getAllBooks() throws IOException, JSONException {
-        System.out.println(BASE_URL);
         String[] command = {"curl", "-X", "GET", BASE_URL + "/_design/books/_view/byAuthor"};
         JSONObject jsonObj = executeCurl(command);
         if (jsonObj.has("error")) {
@@ -80,6 +97,13 @@ public class CouchDBService {
         }
     }
 
+    /**
+     * getBookByLang searches for books by language and returns books with matching language
+     * @param lang language to search for
+     * @return returns matching books or other INFO as Response
+     * @throws IOException
+     * @throws JSONException
+     */
     public static Response getBookByLang(String lang) throws IOException, JSONException {
         String[] command = {"curl", "-X", "GET", BASE_URL + "/_design/books/_view/byLanguage?key=\"" + lang + "\""};
         JSONObject jsonObj = executeCurl(command);
@@ -91,6 +115,13 @@ public class CouchDBService {
         }
     }
 
+    /**
+     * getBookByISBN searches for books by isbn and returns books with matching isbn
+     * @param isbn isbn to search for
+     * @return returns matching book(s) or other INFO/detail as Response
+     * @throws IOException
+     * @throws JSONException
+     */
     public static Response getBookByISBN(String isbn) throws IOException, JSONException {
         boolean isISBN = isISBN(isbn);
         if (isISBN) {
@@ -113,9 +144,13 @@ public class CouchDBService {
         }
     }
 
-    // check/handle for json parsing
-    // error wenn key-value paar fehlt
-    // wennn ein key-value zu viel dann kein error (status 200), aber wird auch nicht hinzugefügt
+    /**
+     * createBook creates a book in the CouchDB from input JSON
+     * @param newBook input JSON in format of object Book
+     * @return returns a Success or detail Response
+     * @throws IOException
+     * @throws JSONException
+     */
     public static Response createBook(Book newBook) throws IOException, JSONException {
         String new_isbn = newBook.getIsbn();
         Response findResp = getBookByISBN(new_isbn);
@@ -137,6 +172,13 @@ public class CouchDBService {
                     .entity("{\"detail\": \"Book already present in library database\"}").build();
         }
     }
+
+    /**
+     * getBookCount counts all books in the library DB and returns the amount
+     * @return returns book count
+     * @throws JSONException
+     * @throws IOException
+     */
     public static Response getBookCount() throws JSONException, IOException {
         Response allBooksResp = getAllBooks();
         String respAsString = allBooksResp.readEntity(String.class);

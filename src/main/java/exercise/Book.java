@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * @Book object that contains information about author, title, language and ISBN
+ * Book class containing author, title, language and isbn
  */
 public class Book {
 
