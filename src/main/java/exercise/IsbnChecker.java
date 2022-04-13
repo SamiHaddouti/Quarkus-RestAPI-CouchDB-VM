@@ -4,13 +4,13 @@ import java.util.Scanner;
 
 // code from https://www.knowprogram.com/java/isbn-number-in-java/
 
+/**
+ * IsbnChecker to evaluate ISBN numbers
+ */
 public class IsbnChecker {
 
     // method to check number is ISBN
     public static boolean isISBN(String number) {
-
-        // declare variable
-        int length = 0;
 
         // remove all hyphens
         number = number.replace("-", "");
@@ -18,7 +18,7 @@ public class IsbnChecker {
         number = number.replace(" ", "");
 
         // find length
-        length = number.length();
+        int length = number.length();
         if(length==13)
             return isISBN13(number);
         else if(length==10)

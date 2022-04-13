@@ -1,11 +1,8 @@
 package exercise;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -18,13 +15,14 @@ import javax.ws.rs.core.Response;
 import static exercise.CouchDBService.*;
 
 /**
- * @Path for accessing and modifying books
+ * Path for accessing and modifying books
  */
 @Path("/api/v1")
 public class RestAPIController {
 
 
   /**
+   * Get all books
    * @getBooks returns all books in list
    */
   @GET
@@ -35,6 +33,7 @@ public class RestAPIController {
   }
 
   /**
+   * Get book(s) by language
    * @param lang is isbn of a book to find
    * @return return a book with specified isbn
    */
@@ -48,8 +47,9 @@ public class RestAPIController {
   }
 
   /**
-   * @param isbn is isbn of a book to find
-   * @return return a book with specified isbn
+   * Get book by isbn
+   * @param isbn is isbn of book(s) to find
+   * @return return book(s) with specified isbn
    */
   @GET
   @Path("/get_isbn/{isbn}")
@@ -60,8 +60,11 @@ public class RestAPIController {
   }
 
   /**
-   * @return returns updated books list
-   * @createBook add new book to DB
+   * Create new book
+   * @param newBook Book as JSON
+   * @return returns (success) response
+   * @throws IOException
+   * @throws JSONException
    */
   @PUT
   @Path("/create")
