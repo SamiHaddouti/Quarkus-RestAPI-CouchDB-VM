@@ -8,7 +8,7 @@
 # docker run -i --rm -p 8080:8080 quarkus/quarkus-rest-api-couchdb-jvm
 #
 # Run container in network:
-# docker run --network lib-network -i --rm -p 8080:8080 quarkus/quarkus-rest-api-couchdb-jvm
+# docker run --network lib-network --env-file .env -i --rm -p 8080:8080 quarkus/exercise-quarkus-jvm
 ###
 
 FROM docker.io/adoptopenjdk/maven-openjdk11 as BUILD
