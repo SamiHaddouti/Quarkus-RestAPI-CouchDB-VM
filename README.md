@@ -85,6 +85,6 @@ getByISBN: curl --location --request GET 'http://localhost:8080/api/v1/get_isbn/
 getBookByLang: curl --location --request GET 'http://localhost:8080/api/v1/get_lang/de'
 getHealth: curl --location --request GET 'http://localhost:8080/api/v1/health'
 getCount: curl --location --request GET 'http://localhost:8080/api/v1/count'
-createBook: curl --location --request PUT 'http://localhost:8080/api/v1/create'--data-raw '{"author": "Ellis, Bret Easton", "title": "American Psycho", "lang": "en", "isbn": "978-1-5290-7715-5"}'
+createBook: curl --location --request PUT 'http://localhost:8080/api/v1/create' --data-raw '{"author": "Ellis, Bret Easton", "title": "American Psycho", "lang": "en", "isbn": "978-1-5290-7715-5"}'
 
 For Kubernetes deployment change localhost and port!
