@@ -88,7 +88,6 @@ public class CouchDBService {
     public static Response getAllBooks() throws IOException, JSONException {
         String[] command = {"curl", "-X", "GET", BASE_URL + "/_design/books/_view/byAuthor"};
         JSONObject jsonObj = executeCurl(command);
-        System.out.println(jsonObj);
         if (jsonObj.has("error")) {
             return Response.ok().entity("{\"INFO\": \"The book listing is empty\"}").build();
         } else {
