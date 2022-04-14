@@ -15,11 +15,11 @@ Userid/Passwort: admin/student
 Man kann 'docker' durch 'podman' ersetzen.
 
 ```
-$ docker run -d -p 5985:5985 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student --name couchdb couchdb:3
+$ docker run -d -p 5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student --name couchdb couchdb:3
 ```
 
 * CouchDB Version 3 ("latest" zum jetzigen Zeitpunkt)
-* Expose port 5985
+* Expose port 5984
 * Admin user/password: admin/student
 * ABER: Keine Persistenz!
 
@@ -31,7 +31,7 @@ CouchDB Datenbanken und Datenobjekte (shards) werden dann dort angelegt.
 Parallel ein Directory couchdb/config anlegen, persistant storage für Config, Benutzer, etc. in Datei docker.ini
 
 ```
-$ docker run -d -p 5985:5985 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student \
+$ docker run -d -p 5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student \
   -v {somedir}/couchdb/data:/opt/couchdb/data \
   -v {somedir}/couchdb/config:/opt/couchdb/etc/local.d --name couchdb couchdb:3
 ```
@@ -39,7 +39,7 @@ $ docker run -d -p 5985:5985 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student \
 Z.B.
 
 ```
-$ docker run -d -p 5985:5985 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student \
+$ docker run -d -p 5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student \
   -v /home/harald/couchdb/data:/opt/couchdb/data \
   -v /home/harald/couchdb/config:/opt/couchdb/etc/local.d --name couchdb couchdb:3
 
@@ -48,7 +48,7 @@ $ docker run -d -p 5985:5985 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student \
 
 #### Web UI Fauxton
 
-[http://localhost:5985/_utils/](http://localhost:5985/_utils/)
+[http://localhost:5984/_utils/](http://localhost:5984/_utils/)
 
 ### WICHTIG!!!! Basic config
 
@@ -164,7 +164,7 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 5985 
+    - port: 5984 
       name: http
   selector:
     app: couchdb
@@ -207,7 +207,7 @@ spec:
       - image: docker.io/library/couchdb:3
         name: couchdb
         ports:
-        - containerPort: 5985
+        - containerPort: 5984
         volumeMounts:
         - mountPath: "/opt/couchdb/data"
           name: data-storage
@@ -242,7 +242,7 @@ $ minikube service couchdb
 [https://docs.couchdb.org/en/stable/intro/tour.html](https://docs.couchdb.org/en/stable/intro/tour.html)
 
 ```bash
-$ curl http://127.0.0.1:5985/ | jq .
+$ curl http://127.0.0.1:5984/ | jq .
 
 {
   "couchdb": "Welcome",
@@ -265,21 +265,21 @@ $ curl http://127.0.0.1:5985/ | jq .
 List all databases
 
 ```bash
-$ curl -X GET http://admin:student@127.0.0.1:5985/_all_dbs
+$ curl -X GET http://admin:student@127.0.0.1:5984/_all_dbs
 ["_replicator","_users"]
 ```
 
 Create a database
 
 ```bash
-$ curl -X PUT http://admin:student@127.0.0.1:5985/albums
+$ curl -X PUT http://admin:student@127.0.0.1:5984/albums
 {"ok":true}
 ```
 
 Delete a database
 
 ```bash
-$ curl -X DELETE http://admin:student@127.0.0.1:5985/albums
+$ curl -X DELETE http://admin:student@127.0.0.1:5984/albums
 {"ok":true}
 ```
 
@@ -295,7 +295,7 @@ https://dev.to/yenyih/query-in-apache-couchdb-views-4hlh
 ### Grundkonfiguration muss nach der CouchDB-Installation einmal ausgeführt werden
 
 1. In Fauxton anmelden (admin/student)
-    [http://localhost:5985/_utils/](http://localhost:5985/_utils/)
+    [http://localhost:5984/_utils/](http://localhost:5984/_utils/)
 2. "Setup" tab (Schraubenschlüsselicon), "Configure a Single Node" anklicken, Login credentials eingeben (admin/student)
 3. "Configure Node" anklicken. Done
 4. "Databases" tab: Es sollte eine _replicator und _users DB geben
@@ -303,7 +303,7 @@ https://dev.to/yenyih/query-in-apache-couchdb-views-4hlh
 
 ### Datenbank, Daten, Views und Anwendungsbeispiele
 
-* Externe URL für CouchDB lokal in der bwLehrpool-Umgebung oder in Docker:  http://admin:student@localhost:5985
+* Externe URL für CouchDB lokal in der bwLehrpool-Umgebung oder in Docker:  http://admin:student@localhost:5984
 * In Minikube über ‚minikube service list‘ für den eigenen Rechner abfragen.
 
 **Datenstrukturen und Daten** entweder anlegen mit dem Skript `create_library_db.sh` (fragt die Verbindungsdaten ab) oder manuell mit diesen Schritten:
@@ -311,7 +311,7 @@ https://dev.to/yenyih/query-in-apache-couchdb-views-4hlh
 1. **Datenbank** anlegen ("library"):
 
 	```
-	curl -X PUT http://admin:student@127.0.0.1:5985/library
+	curl -X PUT http://admin:student@127.0.0.1:5984/library
 	```
 
 2. Einige **Records** (= Bücher) hinzufügen:
@@ -319,17 +319,17 @@ https://dev.to/yenyih/query-in-apache-couchdb-views-4hlh
 	CouchDB erzeugt automatisch die UUID für _id. Daten von 5 Büchern jeweils in JSON Objekt: author, title, lang(uage), isbn.
 
 	```
-	curl -H 'Content-Type: application/json' -X POST http://admin:student@127.0.0.1:5985/library -d '{"author": "King, Stephen", "title": "Es", "lang": "de", "isbn": "978-3-453-43577-3"}' 
-	curl -H 'Content-Type: application/json' -X POST http://admin:student@127.0.0.1:5985/library -d '{"author": "King, Stephen", "title": "Friedhof der Kuscheltiere", "lang": "de", "isbn": "978-3-453-44160-6"}'
-	curl -H 'Content-Type: application/json' -X POST http://admin:student@127.0.0.1:5985/library -d '{"author": "Irving, John", "title": "The Hotel New Hampshire", "lang": "en", "isbn": "978-0-345-40047-5"}'
-	curl -H 'Content-Type: application/json' -X POST http://admin:student@127.0.0.1:5985/library -d '{"author": "Melandri, Francesca", "title": "Über Meereshöhe", "lang": "de", "isbn": "978-3-8031-2812-6"}'
-	curl -H 'Content-Type: application/json' -X POST http://admin:student@127.0.0.1:5985/library -d '{"author": "Highsmith,Patricia", "title": "The Talented Mr. Ripley", "lang": "en", "isbn": "978-3-15-009145-6"}'
+	curl -H 'Content-Type: application/json' -X POST http://admin:student@127.0.0.1:5984/library -d '{"author": "King, Stephen", "title": "Es", "lang": "de", "isbn": "978-3-453-43577-3"}' 
+	curl -H 'Content-Type: application/json' -X POST http://admin:student@127.0.0.1:5984/library -d '{"author": "King, Stephen", "title": "Friedhof der Kuscheltiere", "lang": "de", "isbn": "978-3-453-44160-6"}'
+	curl -H 'Content-Type: application/json' -X POST http://admin:student@127.0.0.1:5984/library -d '{"author": "Irving, John", "title": "The Hotel New Hampshire", "lang": "en", "isbn": "978-0-345-40047-5"}'
+	curl -H 'Content-Type: application/json' -X POST http://admin:student@127.0.0.1:5984/library -d '{"author": "Melandri, Francesca", "title": "Über Meereshöhe", "lang": "de", "isbn": "978-3-8031-2812-6"}'
+	curl -H 'Content-Type: application/json' -X POST http://admin:student@127.0.0.1:5984/library -d '{"author": "Highsmith,Patricia", "title": "The Talented Mr. Ripley", "lang": "en", "isbn": "978-3-15-009145-6"}'
 	```
 
 3. **Views** anlegen: byAuthor, byTitle, byLanguage, byISBN
 
 	```
-	curl -H 'Content-Type: application/json' -X POST http://admin:student@127.0.0.1:5985/library -d \
+	curl -H 'Content-Type: application/json' -X POST http://admin:student@127.0.0.1:5984/library -d \
     '{
         "_id": "_design/books",
         "views": {
@@ -355,7 +355,7 @@ https://dev.to/yenyih/query-in-apache-couchdb-views-4hlh
 1. Alle Bücher anzeigen, sortiert nach Author
 
 	```
-	curl -X GET http://admin:student@127.0.0.1:5985/library/_design/books/_view/byAuthor | jq .
+	curl -X GET http://admin:student@127.0.0.1:5984/library/_design/books/_view/byAuthor | jq .
 	```
 
 	Basiert auf View 'byAuthor' 
@@ -363,7 +363,7 @@ https://dev.to/yenyih/query-in-apache-couchdb-views-4hlh
 2.  Query: Nur englische Bücher:
 
 	```
-	curl -H 'Content-Type: application/json' -X GET 'http://admin:student@127.0.0.1:5985/library/_design/books/_view/byLanguage?key="en"'
+	curl -H 'Content-Type: application/json' -X GET 'http://admin:student@127.0.0.1:5984/library/_design/books/_view/byLanguage?key="en"'
 	```
 
 	Basiert auf View 'byLanguage', 'key' ist eigentlich falsch, der Key ist 'document.lang', der Value ist dann 'en'.
@@ -380,7 +380,7 @@ https://dev.to/yenyih/query-in-apache-couchdb-views-4hlh
 	Query bei nicht vorhandener ISBN:
 
 	```
-	curl -H 'Content-Type: application/json' -X GET 'http://admin:student@127.0.0.1:5985/library/_design/books/_view/byISBN?key="978-3-15-009145-5"' |  jq .rows
+	curl -H 'Content-Type: application/json' -X GET 'http://admin:student@127.0.0.1:5984/library/_design/books/_view/byISBN?key="978-3-15-009145-5"' |  jq .rows
 	[]
 	```
 

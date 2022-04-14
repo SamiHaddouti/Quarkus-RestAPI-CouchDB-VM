@@ -24,7 +24,7 @@ spec:
       - image: docker.io/library/couchdb:3
         name: couchdb
         ports:
-        - containerPort: 5985
+        - containerPort: 5984
         volumeMounts:
         - mountPath: "/opt/couchdb/data"
           name: data-storage
