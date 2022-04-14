@@ -29,4 +29,8 @@ spec:
               secretKeyRef:
                 name: quarkus-rest-api-couchdb-secret
                 key: COUCHDB_PWORD
+          - name: COUCHDB_ADDRESS
+            value: "couchdb"
+          - name: COUCHDB_PORT
+            value: "5984"
 ---
