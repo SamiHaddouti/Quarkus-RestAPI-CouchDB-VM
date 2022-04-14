@@ -159,8 +159,7 @@ public class CouchDBService {
         JSONObject jsonObj = new JSONObject(respAsString);
         if (jsonObj.has("INFO")){
             // Add book
-            String[] command = {"curl", "-H", "Content-Type: application/json",
-                                "-X", "POST", BASE_URL, "-d" + newBook};
+            String[] command = {"curl", "-H", "Content-Type: application/json", "-X", "POST", BASE_URL, "-d" + newBook};
             JSONObject createRespObj = executeCurl(command);
             String doc_id = createRespObj.getString("id");
             String doc_rev = createRespObj.getString("rev");

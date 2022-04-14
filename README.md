@@ -66,25 +66,29 @@ docker build -f src/main/docker/Dockerfile.jvm_multi -t quarkus/quarkus-rest-api
 ## Run in dev mode/locally without container
 ./mvnw compile quarkus:dev
 ## Run in container in host-network with env file 
-docker run --network host --env-file .env -i --rm -p 8080:8080 quarkus/quarkus-rest-api-couchdb-jvm .
+docker run --network lib-network --env-file .env -i --rm -p 8080:8080 quarkus/quarkus-rest-api-couchdb-jvm .
 
 # Couch DB
 
-Run Couch DB:
-docker run -d -p 5984:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student \
---network host --network-alias couchdb \
--v /home/student/PERSISTENT/couchdb/data:/opt/couchdb/data \
--v /home/student/PERSISTENT/couchdb/config:/opt/couchdb/etc/local.d --name couchdb couchdb:3
+## Run Couch DB:
+docker run -d -p 5985:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student \
+--network lib-network --network-alias couchdb \
+-v /home/student/couchdb/data:/opt/couchdb/data \
+-v /home/student/couchdb/config:/opt/couchdb/etc/local.d --name couchdb1 couchdb:3
+
+docker run -d -p 5985:5984 -e COUCHDB_USER=admin -e COUCHDB_PASSWORD=student --network lib-network --network-alias couchdb --name couchdb1 couchdb:3
 
 # Curl Commands 
 [Overview and more commands] (https://documenter.getpostman.com/view/14671395/Uyr4HyxK#f9a1425b-78fd-4030-85cb-3751df5bd3f4)
 Please use the postman documentation as it also includes test cases and can be easily implemented in Postman.
-Else:
+Only exception! createBook curl command below works, while Postman command can vary from local to VM.
+
 getAll: curl --location --request GET 'http://localhost:8080/api/v1/getall'
 getByISBN: curl --location --request GET 'http://localhost:8080/api/v1/get_isbn/978-3-15-009145-6'
 getBookByLang: curl --location --request GET 'http://localhost:8080/api/v1/get_lang/de'
 getHealth: curl --location --request GET 'http://localhost:8080/api/v1/health'
 getCount: curl --location --request GET 'http://localhost:8080/api/v1/count'
-createBook: curl --location --request PUT 'http://localhost:8080/api/v1/create' --data-raw '{"author": "Ellis, Bret Easton", "title": "American Psycho", "lang": "en", "isbn": "978-1-5290-7715-5"}'
+createBook: curl -X PUT 'http://localhost:8080/api/v1/create' -H 'accept: application/json' -H 'Content-Type: application/json' -d '{"author": "Ellis, Bret Easton", "title": "American Psycho", "lang": "en", "isbn": "978-1-5290-7715-5"}'
+
 
 For Kubernetes deployment change localhost and port!

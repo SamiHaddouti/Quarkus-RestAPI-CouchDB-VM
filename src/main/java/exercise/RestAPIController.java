@@ -23,7 +23,7 @@ public class RestAPIController {
 
   /**
    * Get all books
-   * @getBooks returns all books in list
+   * @getall returns all books in list
    */
   @GET
   @Path("/getall")
@@ -70,7 +70,7 @@ public class RestAPIController {
   @Path("/create")
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  public Response putBook(final Book newBook) throws IOException, JSONException {
+  public Response putBook(Book newBook) throws IOException, JSONException {
     return createBook(newBook);
   }
 
