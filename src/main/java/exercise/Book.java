@@ -22,15 +22,7 @@ public class Book {
     this.isbn = isbn;
   }
 
-  // Setter and Getter for attributes
-  public String getAuthor() {
-    return author;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
+  // Getter for attributes
   public String getLanguage() { return lang; }
 
   public String getIsbn() { return isbn; }

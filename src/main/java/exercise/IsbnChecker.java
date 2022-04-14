@@ -1,7 +1,5 @@
 package exercise;
 
-import java.util.Scanner;
-
 // code from https://www.knowprogram.com/java/isbn-number-in-java/
 
 /**

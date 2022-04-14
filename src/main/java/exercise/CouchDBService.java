@@ -20,7 +20,8 @@ public class CouchDBService {
     static String COUCHDB_PORT = ConfigProvider.getConfig().getValue("couchdb.port",String.class);
     static String COUCHDB_USER = ConfigProvider.getConfig().getValue("couchdb.user",String.class);
     static String COUCHDB_PWORD = ConfigProvider.getConfig().getValue("couchdb.pword",String.class);
-    static String BASE_URL = "http://" + COUCHDB_USER + ":" + COUCHDB_PWORD + "@" + COUCHDB_ADDRESS + ":" + COUCHDB_PORT + "/library";
+    static String BASE_URL = "http://" + COUCHDB_USER + ":" + COUCHDB_PWORD + "@"
+                             + COUCHDB_ADDRESS + ":" + COUCHDB_PORT + "/library";
 
     /**
      * executeCurl executes curl commands and returns the Reponse
@@ -85,7 +86,6 @@ public class CouchDBService {
      * @throws JSONException
      */
     public static Response getAllBooks() throws IOException, JSONException {
-        System.out.println(BASE_URL);
         String[] command = {"curl", "-X", "GET", BASE_URL + "/_design/books/_view/byAuthor"};
         JSONObject jsonObj = executeCurl(command);
         System.out.println(jsonObj);

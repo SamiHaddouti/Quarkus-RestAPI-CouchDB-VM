@@ -9,9 +9,9 @@ echo "CouchDB Adresse (default: localhost)"
 read HOST
 HOST="${HOST:=localhost}"
 
-echo "CouchDB Port (default: 5984)"
+echo "CouchDB Port (default: 5985)"
 read PORT
-PORT="${PORT:=5984}"
+PORT="${PORT:=5985}"
 
 echo "CouchDB User (default: admin)"
 read USER
